@@ -1,0 +1,34 @@
+{
+  "version": "5.2.7",
+  "jurisdictions": ["UAE","KSA","US","EU","UN"],
+  "rules": [
+    {
+      "id": "statute-us-fraud-001",
+      "name": "US Fraud Indicator",
+      "jurisdiction": "US",
+      "severity": "HIGH",
+      "match": { "anyPhrases": ["wire fraud", "bank fraud", "false pretenses"], "ext": ["pdf","doc","docx","txt","md"] },
+      "emit": {
+        "subject": "case",
+        "predicate": "possibleViolation",
+        "object": "fraud",
+        "statute": "18 U.S.C. § 1343",
+        "confidence": 0.78
+      }
+    },
+    {
+      "id": "gdpr-eu-001",
+      "name": "EU GDPR Personal Data Exposure",
+      "jurisdiction": "EU",
+      "severity": "MODERATE",
+      "match": { "regex": "(data subject|controller|processor).*(consent|lawful basis)", "ext": ["pdf","doc","txt"] },
+      "emit": {
+        "subject": "processing",
+        "predicate": "requiresLawfulBasis",
+        "object": "gdpr",
+        "statute": "GDPR Art. 6",
+        "confidence": 0.72
+      }
+    }
+  ]
+}

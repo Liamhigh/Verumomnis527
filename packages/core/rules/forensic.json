@@ -1,0 +1,13 @@
+{
+  "version": "5.2.7",
+  "jurisdictions": ["UAE","KSA","US","EU","UN"],
+  "rules": [
+    {
+      "id": "meta-redact-001",
+      "name": "Metadata Redaction Missing",
+      "severity": "LOW",
+      "match": { "anyPhrases": ["exif","metadata","properties"], "ext": ["jpg","jpeg","png","pdf"] },
+      "emit": { "subject": "evidence", "predicate": "hygiene", "object": "metadata-not-redacted", "confidence": 0.6 }
+    }
+  ]
+}

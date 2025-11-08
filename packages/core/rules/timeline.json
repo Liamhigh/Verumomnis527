@@ -1,0 +1,13 @@
+{
+  "version": "5.2.7",
+  "jurisdictions": ["UAE","KSA","US","EU","UN"],
+  "rules": [
+    {
+      "id": "ts-skew-001",
+      "name": "Timestamp Skew",
+      "severity": "LOW",
+      "match": { "anyPhrases": ["created:", "modified:", "received:"], "ext": ["pdf","txt","eml","json"] },
+      "emit": { "subject": "timeline", "predicate": "inconsistency", "object": "clock-skew", "confidence": 0.65 }
+    }
+  ]
+}

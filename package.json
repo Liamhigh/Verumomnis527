@@ -1,0 +1,19 @@
+{
+  "name": "verum-omnis",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "vite",
+    "build:web": "vite build",
+    "serve:web": "vite",
+    "android:add": "pnpm build:web && npx cap add android --project apps/android",
+    "android:sync": "pnpm build:web && npx cap sync android --project apps/android",
+    "android:open": "npx cap open android --project apps/android",
+    "android:build": "cd apps/android/android && ./gradlew assembleRelease"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3",
+    "vite": "^5.3.1",
+    "@capacitor/cli": "^6.1.0"
+  }
+}

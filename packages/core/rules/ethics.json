@@ -1,0 +1,13 @@
+{
+  "version": "5.2.7",
+  "jurisdictions": ["UAE","KSA","US","EU","UN"],
+  "rules": [
+    {
+      "id": "bias-001",
+      "name": "Bias Warning Terms",
+      "severity": "LOW",
+      "match": { "anyPhrases": ["always lies","never truthful","they people"], "ext": ["txt","md","pdf","doc"] },
+      "emit": { "subject": "analysis", "predicate": "biasRisk", "object": "language", "confidence": 0.55 }
+    }
+  ]
+}

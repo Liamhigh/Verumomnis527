@@ -1,0 +1,63 @@
+
+name: iOS IPA (Capacitor)
+on:
+  push:
+    tags: [ "v*" ]
+
+jobs:
+  ios:
+    # Building for iOS requires a macOS runner
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 9 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Install deps & build web
+        run: |
+          pnpm i
+          pnpm -C apps/web build
+        env:
+          VITE_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      # Before this step, you must have run `npx cap add ios` on a Mac
+      # and committed the `apps/ios` directory to your repository.
+      - name: Capacitor Sync
+        run: |
+          pnpm i -g @capacitor/cli
+          npx cap sync ios --project apps/ios
+
+      # ================================================================
+      # IOS CODE SIGNING
+      # This is a complex step that requires Apple Developer secrets.
+      # 1. APPLE_DEVELOPER_CERTIFICATE_BASE64: Your P12 certificate.
+      # 2. APPLE_DEVELOPER_CERTIFICATE_PASSWORD: The certificate password.
+      # 3. APPLE_PROVISIONING_PROFILE_BASE64: Your provisioning profile.
+      # You would typically use a dedicated GitHub Action for this.
+      # ================================================================
+      - name: Install Apple Certificate and Provisioning Profile
+        run: |
+          echo "Placeholder for installing Apple signing certificates."
+          echo "This requires setting up secrets for your certs and profiles."
+          # Example using a dedicated action:
+          # - uses: apple-actions/import-codesign-certs@v2
+          #   with:
+          #     p12-file-base64: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_BASE64 }}
+          #     p12-password: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }}
+
+      - name: Build Xcode Project
+        working-directory: apps/ios/ios
+        run: |
+          echo "Placeholder for xcodebuild command"
+          # The actual command would be something like:
+          # xcodebuild -workspace App.xcworkspace -scheme App -configuration Release \
+          #   -archivePath $PWD/build/App.xcarchive archive
+          # xcodebuild -exportArchive -archivePath $PWD/build/App.xcarchive \
+          #   -exportPath $PWD/build/ipa -exportOptionsPlist Info.plist
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: verum-omnis-ipa
+          path: apps/ios/ios/build/ipa/VerumOmnis.ipa # Example path

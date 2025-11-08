@@ -1,0 +1,20 @@
+{
+  "version": "5.2.7",
+  "jurisdictions": ["UAE","KSA","US","EU","UN"],
+  "rules": [
+    {
+      "id": "gaslight-001",
+      "name": "Gaslighting Phrases",
+      "severity": "MODERATE",
+      "match": { "anyPhrases": ["you're remembering wrong","that never happened","you're too sensitive","you're crazy"], "ext": ["pdf","doc","txt","md","eml"] },
+      "emit": { "subject": "communication", "predicate": "manipulation", "object": "gaslighting", "confidence": 0.85 }
+    },
+    {
+      "id": "coercion-001",
+      "name": "Coercion Indicators",
+      "severity": "HIGH",
+      "match": { "anyPhrases": ["or else", "you have no choice", "must do exactly"], "ext": ["pdf","txt","md","eml"] },
+      "emit": { "subject": "communication", "predicate": "manipulation", "object": "coercion", "confidence": 0.78 }
+    }
+  ]
+}

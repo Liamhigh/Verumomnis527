@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Verum Omnis Rule Pack",
+  "type": "object",
+  "required": ["version", "jurisdictions", "rules"],
+  "properties": {
+    "version": { "type": "string" },
+    "jurisdictions": { "type": "array", "items": { "type": "string" } },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "match", "emit"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "jurisdiction": { "type": "string" },
+          "severity": { "type": "string", "enum": ["LOW","MODERATE","HIGH"] },
+          "match": {
+            "type": "object",
+            "properties": {
+              "anyPhrases": { "type": "array", "items": { "type": "string" } },
+              "allPhrases": { "type": "array", "items": { "type": "string" } },
+              "regex": { "type": "string" },
+              "ext": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "emit": {
+            "type": "object",
+            "properties": {
+              "subject": { "type": "string" },
+              "predicate": { "type": "string" },
+              "object": { "type": "string" },
+              "statute": { "type": "string" },
+              "confidence": { "type": "number" }
+            },
+            "required": ["subject","predicate","object","confidence"]
+          }
+        }
+      }
+    }
+  }
+}

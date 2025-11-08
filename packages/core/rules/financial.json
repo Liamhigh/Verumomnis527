@@ -1,0 +1,13 @@
+{
+  "version": "5.2.7",
+  "jurisdictions": ["UAE","KSA","US","EU","UN"],
+  "rules": [
+    {
+      "id": "fin-anom-001",
+      "name": "Irregular Ledger Delta",
+      "severity": "MODERATE",
+      "match": { "anyPhrases": ["unreconciled", "suspense account", "round-dollar"], "ext": ["csv","xlsx","json"] },
+      "emit": { "subject": "ledger", "predicate": "anomaly", "object": "irregular-deltas", "confidence": 0.7 }
+    }
+  ]
+}
