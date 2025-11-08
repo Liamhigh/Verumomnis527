@@ -1,26 +1,18 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path from "path";
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path'
 
 export default defineConfig({
-    root: "apps/web",
-    plugins: [react()],
-    resolve: {
-        alias: {
-            "@verum/core": path.resolve(__dirname, "packages/core/src"),
-        },
+  root: 'apps/web',
+  plugins: [react()],
+  server: {
+    port: 5173,
+    strictPort: true,
+  },
+  resolve: {
+    alias: {
+      '@core': path.resolve(__dirname, 'packages/core/src'),
     },
-    server: {
-        fs: {
-            allow: [path.resolve(__dirname)]
-        }
-    },
-    define: {
-        // forward your env if you need it client-side
-        "process.env.API_KEY": JSON.stringify(process.env.VITE_API_KEY || ""),
-    },
-});
+  },
+  // Let Vite use default outDir under apps/web; simpler and safer
+})
